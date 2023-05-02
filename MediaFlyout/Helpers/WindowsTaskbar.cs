@@ -41,44 +41,14 @@ namespace MediaFlyout.Helpers
         {
             get
             {
-                Position side;
-                double right, bottom;
-
                 var wk = SystemParameters.WorkArea;
-                if (wk.Width == SystemParameters.PrimaryScreenWidth)
-                {
-                    right = wk.Right;
-                    if (wk.Top > 0)
-                    {
-                        side = Position.Top;
-                        bottom = wk.Top;
-                    }
-                    else
-                    {
-                        side = Position.Bottom;
-                        bottom = wk.Height;
-                    }
-                }
-                else
-                {
-                    bottom = wk.Bottom;
-                    if (wk.Left > 0)
-                    {
-                        side = Position.Left;
-                        right = wk.Left;
-                    }
-                    else
-                    {
-                        side = Position.Right;
-                        right = wk.Width;
-                    }
-                }
 
+                // Hard code task bar being at top of screen
                 return new State
                 {
-                    Side = side,
-                    Right = right,
-                    Bottom = bottom
+                    Side = Position.Top,
+                    Right = wk.Right,
+                    Bottom = wk.Top
                 };
             }
         }

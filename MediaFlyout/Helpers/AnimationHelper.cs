@@ -20,44 +20,11 @@ namespace MediaFlyout.Helpers
 
             var taskbar = WindowsTaskbar.Current;
 
-            if (taskbar.IsHorizontal)
-            {
-                property = Window.TopProperty;
-                window.Left = taskbar.Right - window.Width + window.BorderThickness.Right;
-            }
-            else
-            {
-                property = Window.LeftProperty;
-                window.Top = taskbar.Bottom - window.Height + window.BorderThickness.Bottom;
-            }
-
-            switch (taskbar.Side)
-            {
-                case WindowsTaskbar.Position.Bottom:
-                    from = taskbar.Bottom;
-                    to = taskbar.Bottom - window.Height + window.BorderThickness.Bottom;
-                    break;
-                case WindowsTaskbar.Position.Top:
-                    from = 0;
-                    to = taskbar.Bottom - window.BorderThickness.Top;
-                    break;
-                case WindowsTaskbar.Position.Left:
-                    from = 0;
-                    to = taskbar.Right - window.BorderThickness.Left;
-                    break;
-                case WindowsTaskbar.Position.Right:
-                    from = taskbar.Right;
-                    to = taskbar.Right - window.Width + window.BorderThickness.Right;
-                    break;
-                default:
-                    throw new InvalidOperationException();
-            }
-
-            if (Environment.OSVersion.IsAtLeast(OSVersions.VER_11_21H2))
-            {
-                to -= 12;
-                window.Left = taskbar.Right - window.Width + window.BorderThickness.Right - 12;
-            }
+            // Hard coded for task bar at top accounting for 30 pixel GlazeWM bar offset and 20 pixel gap size
+            property = Window.TopProperty;
+            from = 0;
+            to = taskbar.Bottom - window.BorderThickness.Top + 50;
+            window.Left = taskbar.Right - window.Width + window.BorderThickness.Right - 20;
 
             return new FlyoutAnimationScheme
             {
